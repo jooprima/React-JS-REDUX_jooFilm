@@ -1,21 +1,34 @@
-import React, { Component } from "react";
-import { Button } from "semantic-ui-react";
-import { connect } from "react-redux";
+// src/App.js
 
-class App extends Component {
-  render() {
+import React from "react";
+import NavBar from "./components/NavBar";
+import { useAuth0 } from "./react-auth0-wrapper";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Profile from "./components/Profile";
+
+function App() {
+  const { loading } = useAuth0();
+
+  if (loading) {
     return (
-      <div>
-        <Button primary>{this.props.tes}</Button>
-      </div>
+      <div>Loading...</div>
     );
   }
+
+  return (
+    <div className="App">
+      {/* New - use BrowserRouter to provide access to /profile */}
+      <BrowserRouter>
+        <header>
+          <NavBar />
+        </header>
+        <Switch>
+          <Route path="/" exact />
+          <Route path="/profile" component={Profile} />
+        </Switch>
+      </BrowserRouter>
+    </div>
+  );
 }
 
-const stateApp = state => {
-  return {
-    tes: state.tes
-  };
-};
-
-export default connect(stateApp)(App);
+export default App;
