@@ -1,13 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div>
-      {" "}
-      <Button primary>Tes semantic ui</Button>{" "}
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <Button primary>{this.props.tes}</Button>
+      </div>
+    );
+  }
 }
 
-export default App;
+const stateApp = state => {
+  return {
+    tes: state.tes
+  };
+};
+
+export default connect(stateApp)(App);
