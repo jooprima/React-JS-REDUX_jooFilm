@@ -32,3 +32,6 @@ function App() {
 }
 
 export default App;
+
+// npm install --save react@16.9.0
+// npm install --save react-dom@16.9.0
