@@ -1,37 +1,55 @@
-// src/App.js
+import React, { Component } from "react";
+import { Button } from "semantic-ui-react";
 
-import React from "react";
-import NavBar from "./components/NavBar";
-import { useAuth0 } from "./react-auth0-wrapper";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Profile from "./components/Profile";
 
-function App() {
-  const { loading } = useAuth0();
-
-  if (loading) {
-    return (
-      <div>Loading...</div>
-    );
+class App extends Component {
+  goTo(route) {
+    this.props.history.replace("/${route");
   }
 
-  return (
-    <div className="App">
-      {/* New - use BrowserRouter to provide access to /profile */}
-      <BrowserRouter>
-        <header>
-          <NavBar />
-        </header>
-        <Switch>
-          <Route path="/" exact />
-          <Route path="/profile" component={Profile} />
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
+  login() {
+    this.props.auth.login();
+  }
+
+  logout() {
+    this.props.auth.logout();
+  }
+
+  componentDidMount() {
+    const { renewSession } = this.props.auth;
+
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      renewSession();
+    }
+  }
+
+  render() {
+    const { isAuthenticated } = this.props.auth;
+
+    return (
+      <div>
+        <Button
+          onClick={this.goTo.bind(this, "home")}
+        >
+          Home
+        </Button>
+        {!isAuthenticated() && (
+          <Button
+            onClick={this.login.bind(this)}
+          >
+            Log In
+          </Button>
+        )}
+        {isAuthenticated() && (
+          <Button
+            onClick={this.logout.bind(this)}
+          >
+            Log Out
+          </Button>
+        )}
+      </div>
+    );
+  }
 }
 
 export default App;
-
-// npm install --save react@16.9.0
-// npm install --save react-dom@16.9.0
