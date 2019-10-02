@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Route, Router } from "react-router-dom";
 import App from "./App";
-import Home from "./Home/Home";
+import Home from "./Component/Home";
+import Film from "./Component/Film";
+import Actor from "./Component/Actor";
 import Callback from "./Callback/Callback";
 import Auth from "./Auth/Auth";
 import history from "./history";
@@ -23,6 +25,14 @@ class Routes extends Component {
           <Route
             path="/home"
             render={props => <Home auth={auth} {...props} />}
+          />
+          <Route
+            path="/film"
+            render={props => <Film auth={auth} {...props} />}
+          />
+          <Route
+            path="/actor"
+            render={props => <Actor auth={auth} {...props} />}
           />
           <Route
             path="/callback"

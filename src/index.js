@@ -6,23 +6,29 @@ import Routes from "./Routes";
 import "semantic-ui-css/semantic.min.css";
 import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
 // import { Auth0Provider } from "./react-auth0-wrapper";
 // import config from "./auth_config.json";
 
 const stateFilm = {
-  tes:"tes redux"
-}
+  activeItem: "home"
+};
 
 //Reducer
-const reducerFilm = (state = stateFilm) =>{
-  return state;
-}
+const reducerFilm = (state = stateFilm, action) => {
+  switch (action.type) {
+    case "ACTIVE_ITEM":
+      var stateActiveItem = { ...state, activeItem: action.ActiveItem };
+      return stateActiveItem;
+    default:
+      return state;
+  }
+};
 
 const store = createStore(reducerFilm);
 
 ReactDOM.render(
-  <Provider store={store} >
+  <Provider store={store}>
     <Routes />
   </Provider>,
   document.getElementById("root")
