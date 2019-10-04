@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import { Card, Image, Icon, Grid } from "semantic-ui-react";
+import Axios from "axios";
 
 var Images = [
   "https://cdn.pixabay.com/photo/2015/03/26/09/43/lenses-690179__480.jpg",
@@ -15,6 +16,27 @@ var Images = [
 ];
 
 class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      dataHome: []
+    };
+  }
+
+  getData = () => {
+    Axios.get(`http://api.tvmaze.com/search/shows?q=a`).then(res => {
+      console.log(res.data);
+
+      this.setState({
+        dataHome: res.data
+      });
+    });
+  };
+
+  componentDidMount() {
+    this.getData();
+  }
+
   render() {
     return (
       <div>
@@ -34,28 +56,40 @@ class Home extends Component {
         </Carousel>
 
         <Grid>
-          <Grid.Column width={4}>
-            <Card>
-              <Image
-                src="https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289__480.jpg"
-                wrapped
-                ui={false}
-              />
-              <Card.Content>
-                <Card.Header>Matthew</Card.Header>
-                <Card.Meta>
-                  <span className="date">Joined in 2015</span>
-                </Card.Meta>
-                <Card.Description>
-                  Matthew is a musician living in Nashville.
-                </Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Icon name="user" />
-                22 Friends
-              </Card.Content>
-            </Card>
-          </Grid.Column>
+          {this.state.dataHome.map((data, key) => {
+            var images = { ...data.show.image };
+            var ratings = { ...data.show.rating };
+
+            if (data.show.images === null) {
+              images =
+                "https://cdn.pixabay.com/photo/2019/01/13/21/36/analog-3931362__480.jpg";
+            } else {
+              images = images.original;
+            }
+
+            if (ratings.average === null) {
+              ratings = 0;
+            } else {
+              ratings = ratings.average;
+            }
+
+            return (
+              <Grid.Column key={key} width={3}>
+                <Card>
+                  <Image src={images} wrapped ui={false} />
+                  <Card.Content>
+                    <Card.Header>{data.show.name}</Card.Header>
+
+                    <Card.Description>{data.show.status}</Card.Description>
+                  </Card.Content>
+                  <Card.Content extra>
+                    <Icon name="star" />
+                    {ratings}
+                  </Card.Content>
+                </Card>
+              </Grid.Column>
+            );
+          })}
         </Grid>
       </div>
     );
