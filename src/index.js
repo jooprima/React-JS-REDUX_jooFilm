@@ -7,6 +7,7 @@ import "semantic-ui-css/semantic.min.css";
 import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 // import { Auth0Provider } from "./react-auth0-wrapper";
 // import config from "./auth_config.json";
 
