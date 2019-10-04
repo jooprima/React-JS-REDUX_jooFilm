@@ -12,7 +12,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 // import config from "./auth_config.json";
 
 const stateFilm = {
-  activeItem: "home"
+  activeItem: "beranda"
 };
 
 //Reducer

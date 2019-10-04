@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
+import Beranda from "./Component/Beranda";
 
 class App extends Component {
   goTo(route) {
@@ -29,9 +30,21 @@ class App extends Component {
     return (
       <div>
         <Menu pointing inverted color="blue">
-          <Menu.Item name="home" active={this.props.activeItem === "home"} onClick={this.goTo.bind(this,"home")}/>
-          <Menu.Item name="film" active={this.props.activeItem === "film"} onClick={this.goTo.bind(this,"film")} />
-          <Menu.Item name="actor" active={this.props.activeItem === "actor" } onClick={this.goTo.bind(this,"actor")} />
+          <Menu.Item
+            name="home"
+            active={this.props.activeItem === "home"}
+            onClick={this.goTo.bind(this, "home")}
+          />
+          <Menu.Item
+            name="film"
+            active={this.props.activeItem === "film"}
+            onClick={this.goTo.bind(this, "film")}
+          />
+          <Menu.Item
+            name="actor"
+            active={this.props.activeItem === "actor"}
+            onClick={this.goTo.bind(this, "actor")}
+          />
           <Menu.Menu position="right">
             <Menu.Item>
               {!isAuthenticated() && (
@@ -47,6 +60,8 @@ class App extends Component {
             </Menu.Item>
           </Menu.Menu>
         </Menu>
+
+        {this.props.activeItem === "beranda" && <Beranda />}
       </div>
     );
   }
